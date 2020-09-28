@@ -32,5 +32,4 @@ script:
   - cmake ..
   - make
   - make gtest_main
-  - gtest_main
-
+  - ./gtest_main
