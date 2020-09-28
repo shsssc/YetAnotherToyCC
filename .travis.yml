@@ -32,4 +32,4 @@ script:
   - cmake ..
   - make
   - make gtest_main
-  - ./gtest_main
+  - ./Google_tests/Google_Tests_run
