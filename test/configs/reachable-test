@@ -1,0 +1,6 @@
+S := A | B;
+A := A1 | A2;
+B := B1 | B2;
+
+
+Unreachable := A|B;

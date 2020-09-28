@@ -1,0 +1,8 @@
+Expression := Number | Number '+' Expression | Number '-' Expression | '(' Expression ')';
+Number := '1' | '2' | '3';
+
+A := B | 'Solid A';
+C := A | 'Solid B';
+B := C | D | 'Solid C';
+D := B | 'Solid D';
+E := C | 'Solid E';

@@ -1,0 +1,9 @@
+S := A | G;
+A := B | A;
+B := C 'www';
+C := C;
+G := G1 G2;
+G1 := G11 'C' | G2;
+G2 := G21 'D' | G1;
+G11 := 'Good';
+G21 := 'Good';

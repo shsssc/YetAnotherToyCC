@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.16)
+project(project)
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(project main.cpp Symbol.cpp Rule.cpp testUtils.cpp utils.h Grammar.cpp Grammar.h visitors/GetReachableVisitor.cpp visitors/GetReachableVisitor.h visitors/FixedPointVisitor.cpp visitors/FixedPointVisitor.h visitors/GetNullableVisitor.cpp visitors/GetNullableVisitor.h visitors/RemoveUnreachableVisitor.cpp visitors/RemoveUnreachableVisitor.h visitors/RemoveNullableVisitor.cpp visitors/RemoveNullableVisitor.h visitors/RemoveUnitVisitor.cpp visitors/RemoveUnitVisitor.h visitors/GetProducableVisitor.cpp visitors/GetProducableVisitor.h visitors/RemoveUnproducableVisitor.cpp visitors/RemoveUnproducableVisitor.h visitors/MakeCnfVisitor.cpp visitors/MakeCnfVisitor.h regular-expression/Re2NFA.cpp regular-expression/Re2NFA.h regular-expression/NFAState.cpp regular-expression/NFAState.h regular-expression/NFA.cpp regular-expression/NFA.h regular-expression/LongestReMatcher.cpp Token.h Token.cpp regular-expression/LongestReMatcher.h Nondirectional-Parsing/UngerParser.cpp Nondirectional-Parsing/UngerParser.h ParseTree.cpp ParseTree.h)
+add_subdirectory(Google_tests)
+set_target_properties(project PROPERTIES COMPILE_DEFINITIONS "PROJ_ROOT=\"${CMAKE_CURRENT_SOURCE_DIR}/\"")

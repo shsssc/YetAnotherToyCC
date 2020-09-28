@@ -1,0 +1,12 @@
+SPACE = ( )+
+IF = if
+ID = [a-zA-Z_][a-zA-Z_0-9]*
+SC =       ;
+LP = [(]
+RP = [)]
+LB =[{]
+RB   =                    [}]
+Quote   ="[a-z0-9A-Z ]*"
+Plus= \+
+Minus= [\-]
+Number = [0-9]+
