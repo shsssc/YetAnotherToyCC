@@ -39,3 +39,7 @@ std::set<Symbol *> Grammar::getNonTerminal() {
 std::set<Symbol *> Grammar::getTerminal() {
     return Symbol::terminals();
 }
+
+Grammar::Grammar() {
+
+}

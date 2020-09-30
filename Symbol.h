@@ -16,7 +16,6 @@ class Symbol {
     static std::map<std::string, Symbol *> _terminals;
     static std::map<std::string, Symbol *> _nonTerminals;
     const std::string _type;
-    const std::string _value;
     const bool _isTerminal;
 
     Symbol(bool isTerminal, std::string name);
@@ -25,10 +24,6 @@ class Symbol {
 
 public:
     std::string getName() const;
-
-    std::string getValue() const {
-        return _value;
-    }
 
     bool isTerminal() const;
 

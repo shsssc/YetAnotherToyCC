@@ -1,0 +1,4 @@
+A := 'LP' B 'RP' C | 'IF' ;
+B := 'LB' A 'RB' | '' | 'ID';
+C := D 'SC';
+D := B;

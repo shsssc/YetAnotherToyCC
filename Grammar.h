@@ -23,7 +23,7 @@ class Grammar {
     Symbol *_startSym;
 public:
     explicit Grammar(std::string g_str);
-
+    Grammar();
     void print();
 
     Rules &getRules();

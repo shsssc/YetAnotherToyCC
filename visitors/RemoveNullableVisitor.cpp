@@ -62,6 +62,7 @@ void RemoveNullableVisitor::visit(Grammar &g) {
         RhsList ruleToAdd;
         Rhs pendingRhs;
         for (auto &rule:rules) {
+            //find all productions that nullable is (partially) removed.
             recursiveRemoveNullable(rule, rule.begin(),
                                     nullables, ruleToAdd, pendingRhs);
         }

@@ -2,6 +2,7 @@
 #include "Grammar.h"
 #include "./Nondirectional-Parsing/UngerParser.h"
 #include "./regular-expression/LongestReMatcher.h"
+#include "./LL-Parsing/LL1Parser.h"
 
 int evaluate(std::shared_ptr<Node> tree) {
     if (tree->_terminal) {
@@ -21,26 +22,24 @@ int evaluate(std::shared_ptr<Node> tree) {
 }
 
 int main() {
-
+//http://pages.cs.wisc.edu/~fischer/cs536.f13/lectures/f12/Lecture22.4up.pdf
     auto s = readfile(PROJ_ROOT
-                      R"(/test/configs/plus-exp-simple)");
+                      R"(/test/configs/ll1-first-test)");
     Grammar g(s);
-    UngerParser parser(g);
+    LL1Parser p(g);
 
     s = readfile(PROJ_ROOT
                  R"(/regular-expression/configs/simple)");
     LongestReMatcher l(s);
 
-    auto tokens = l.match("(5+ 1 + (2 + 3) +1+1+1000)");
+    auto tokens = l.match(" ({(abc);});");
     LongestReMatcher::removeTokenFromList(tokens, "SPACE");
     std::vector<Token> vtokens(tokens.begin(), tokens.end());
-    if (parser.validate(vtokens)) {
-        std::cout << "Good!" << std::endl;
-    } else {
-        std::cout << "Bad!" << std::endl;
+    if (p.validate(vtokens)) {
+        std::cout << "Good!!" << std::endl;
+    }else{
+        std::cout << "bad!!" << std::endl;
     }
-    auto parseTree = parser.parse(vtokens);
-    std::cout << evaluate(parseTree);
     return 0;
 }
 
