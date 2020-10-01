@@ -202,9 +202,9 @@ public:
             std::set<Symbol *> visited;
             follow(s, visited);
         }
-        printFirstSet();
-        printFollowSet();
-        printParseTable();
+        //printFirstSet();
+        //printFollowSet();
+        //printParseTable();
     }
 };
 

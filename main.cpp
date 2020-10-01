@@ -22,7 +22,7 @@ int evaluate(std::shared_ptr<Node> tree) {
 }
 
 int main() {
-//http://pages.cs.wisc.edu/~fischer/cs536.f13/lectures/f12/Lecture22.4up.pdf
+  //http://pages.cs.wisc.edu/~fischer/cs536.f13/lectures/f12/Lecture22.4up.pdf
     auto s = readfile(PROJ_ROOT
                       R"(/test/configs/ll1-first-test)");
     Grammar g(s);
