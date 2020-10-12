@@ -1,0 +1,5 @@
+Prog := '{' Stmts '}' ;
+Stmts := '' | Stmt Stmts;
+Stmt := 'id' 'equal' Expr ';' | 'if' '(' Expr ')' Stmt;
+Expr := 'id' Etail;
+Etail := '+' Expr | '-' Expr | '';

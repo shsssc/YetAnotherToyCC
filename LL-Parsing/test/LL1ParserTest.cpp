@@ -22,5 +22,20 @@ TEST(LL1,simple){
     EXPECT_TRUE(validateString(p,l," if "));
     EXPECT_TRUE(validateString(p,l,"({if}) id ;"));
     EXPECT_TRUE(validateString(p,l,"({if}) {({if}) id ;} ;"));
+    EXPECT_FALSE(validateString(p,l,"asfd"));
+    EXPECT_FALSE(validateString(p,l,"({if}) {({if}) id ;} ;;;;;;;"));
+
+}
+
+TEST(LL1,simple1){
+    auto s = readfile(PROJ_ROOT
+                      R"(/test/configs/ll1-prog)");
+    Grammar g(s);
+    LL1Parser p(g);
+    s = readfile(PROJ_ROOT
+                 R"(/regular-expression/configs/ll1)");
+    LongestReMatcher l(s);
+    EXPECT_TRUE(validateString(p,l,"{ id = id + id;id = id + id;id = id + id;id = id + id;id = id + id;id = id + id;id = id + id;id = id + id;id = id + id;id = id + id;id = id + id;id = id + id;id = id + id; }"));
+    EXPECT_FALSE(validateString(p,l,"{id = id - id}"));
 
 }

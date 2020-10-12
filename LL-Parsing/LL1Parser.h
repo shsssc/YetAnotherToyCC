@@ -5,6 +5,7 @@
 #ifndef PROJECT_LL1PARSER_H
 #define PROJECT_LL1PARSER_H
 
+#include "../ParseTree.h"
 #include "../Token.h"
 #include "../Grammar.h"
 #include "../visitors/GetNullableVisitor.h"
@@ -202,22 +203,28 @@ public:
             std::set<Symbol *> visited;
             follow(s, visited);
         }
-        //printFirstSet();
-        //printFollowSet();
-        //printParseTable();
     }
 };
 
 class LL1Parser : public LL1TableBuilder {
-    int parse(Symbol *s, int start, std::vector<Token> &tokens) {
-        if (s->isTerminal() && s->getName().empty())return start;
+    std::pair<int, std::shared_ptr<Node>> parse(Symbol *s, int start, std::vector<Token> &tokens) {
+        auto result = std::make_shared<Node>();
+        result->_symbol = s;
+        //empty is matched
+        if (s->isTerminal() && s->getName().empty()) {
+            result->_terminal = true;
+            result->_value = "";
+            return {start, result};
+        }
         if (start < 0 || start >= tokens.size()) {
             throw std::runtime_error("unexpected start");
         }
         if (s->isTerminal()) {
-            if (s->getName() == tokens[start].type)
-                return start + 1;
-            else
+            if (s->getName() == tokens[start].type) {
+                result->_terminal = true;
+                result->_value = tokens[start].value;
+                return {start + 1, result};
+            } else
                 throw std::runtime_error("failed to parse terminal" + s->getName());
         }
         if (_table.find(s) == _table.end()) throw std::runtime_error("unexpected symbol");
@@ -226,11 +233,15 @@ class LL1Parser : public LL1TableBuilder {
         if (_table[s].find(lookAheadSym) == _table[s].end())
             throw std::runtime_error("unexpected terminal symbol" + lookAhead.type);
         auto &rule = *_table[s][lookAheadSym];
+        result->_rule = rule;
+        result->_terminal = false;
         int tmp = start;
+        std::shared_ptr<Node> tmpnode;
         for (auto sym:rule) {
-            tmp = parse(sym, tmp, tokens);
+            std::tie(tmp, tmpnode) = parse(sym, tmp, tokens);
+            result->_children.push_back(tmpnode);
         }
-        return tmp;
+        return {tmp, result};
     }
 
 public:
@@ -239,7 +250,18 @@ public:
     }
 
     bool validate(std::vector<Token> &tokens) {
-        return parse(_g.getStartSymbol(), 0, tokens) == tokens.size();
+        try {
+            return parse(_g.getStartSymbol(), 0, tokens).first == tokens.size();
+        } catch (std::runtime_error e) {
+            return false;
+        }
+
+    }
+
+    std::shared_ptr<Node> parse(std::vector<Token> &input) {
+        auto result = parse(_g.getStartSymbol(), 0, input);
+        if (result.first != input.size())throw std::runtime_error("failed");
+        return result.second;
     }
 
 };
