@@ -250,8 +250,12 @@ public:
     }
 
     bool validate(std::vector<Token> &tokens) {
+        Token tmp("EOF", "EOF");
+        tokens.push_back(tmp);
         try {
-            return parse(_g.getStartSymbol(), 0, tokens).first == tokens.size();
+            auto result = parse(_g.getStartSymbol(), 0, tokens).first == tokens.size() - 1;
+            tokens.pop_back();
+            return result;
         } catch (std::runtime_error e) {
             return false;
         }
@@ -259,7 +263,10 @@ public:
     }
 
     std::shared_ptr<Node> parse(std::vector<Token> &input) {
+        Token tmp("EOF", "EOF");
+        input.push_back(tmp);
         auto result = parse(_g.getStartSymbol(), 0, input);
+        input.pop_back();
         if (result.first != input.size())throw std::runtime_error("failed");
         return result.second;
     }
